@@ -93,6 +93,9 @@ Set these globals **before** the plugin loads (e.g. in your `.vimrc`):
 " Change the key (default: gm)
 let g:line_fraction_mapping = 'gm'
 
+" Example: use <Space> instead of gm
+let g:line_fraction_mapping = '<Space>'
+
 " Disable default mappings and define your own
 let g:line_fraction_no_mappings = 1
 nmap <silent> <Space> <Plug>(LineFractionJump)
