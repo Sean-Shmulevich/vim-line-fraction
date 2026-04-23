@@ -112,13 +112,39 @@ vim.keymap.set({'n','v'}, '<Space>', function()
 end, { noremap = true, silent = true })
 ```
 
+## Reassigning count prefixes
+
+Every count→fraction mapping is configurable. You can reassign the defaults,
+add new slots, or remove ones you don't use:
+
+```lua
+-- Example: put first-nonblank on 4, shift everything else down,
+-- and add a ⅓ slot on 5.
+require('line_fraction').setup({
+  fractions = {
+    [0] = 0.5,              -- gm  → middle
+    [1] = 0.25,             -- 1gm → 25%
+    [2] = 0.5,              -- 2gm → middle (same as no-count)
+    [3] = 0.75,             -- 3gm → 75%
+    [4] = 'first_nonblank', -- 4gm → first non-blank
+    [5] = 0.33,             -- 5gm → ⅓  (custom)
+  },
+})
+```
+
+In Vim:
+```vim
+let g:line_fraction_fractions = {0: 0.5, 1: 0.25, 3: 0.75, 4: 1.0, 5: 0.33}
+```
+
 ## How fractions work
 
 For a line with leading whitespace the percentage is applied to the
 **non-blank** portion of the line, so `gm` always lands near the visual
 centre of the content rather than the centre of the indented line.
 
-Unknown count prefixes (e.g. `5gm`, `9gm`) fall back to 50% (middle).
+Unknown count prefixes (e.g. `9gm`) fall back to 50% (middle) unless
+you add them to the `fractions` table.
 
 ## Requirements
 
